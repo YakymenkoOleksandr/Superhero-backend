@@ -8,6 +8,8 @@ import {
 import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { env } from '../utils/env.js';
 
 export const getSuperherosController = async (req, res, next) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -91,7 +93,11 @@ export const patchSuperheroController = async (req, res, next) => {
   let imageUrl;
 
   if (images) {
-    imageUrl = await saveFileToUploadDir(images);
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      imageUrl = await saveFileToCloudinary(images);
+    } else {
+      imageUrl = await saveFileToUploadDir(images);
+    }
   }
 
   const result = await updateSuperhero(superheroId, {
