@@ -1,16 +1,14 @@
 import { Router } from 'express';
-import { upload } from '../middlewares/multer.js';
-import { superherosCollection } from '../db/models/superhero.js'; 
+import { superherosCollection } from '../db/models/superhero.js';
 
 const router = Router();
 
 
 router.patch(
   '/superheros/:id/images',
-  upload.single('image'),
   async (req, res) => {
     console.log('Received PATCH request for hero ID:', req.params.id);
-    console.log('Uploaded file:', req.file);
+    console.log('Image URL from Cloudinary:', req.body.imageUrl);
 
     try {
       const hero = await superherosCollection.findById(req.params.id);
@@ -18,25 +16,47 @@ router.patch(
         return res.status(404).json({ message: 'Hero not found.' });
       }
 
-      let imageUrl;
-
-
-      if (req.file) {
-        imageUrl = req.file.path;
-      } else if (req.body.imageUrl) {
-        imageUrl = req.body.imageUrl;
-      }
-
+      // Перевіряємо, чи передано посилання на зображення
+      const { imageUrl } = req.body;
       if (imageUrl) {
-        hero.images.push(imageUrl);
-        await hero.save();
+        hero.images.push(imageUrl); // Додаємо URL до масиву зображень
+        await hero.save(); // Зберігаємо оновлення в базі даних
         return res.json(hero);
       } else {
-        return res.status(400).json({ message: 'No image uploaded.' });
+        return res.status(400).json({ message: 'No image URL provided.' });
       }
     } catch (error) {
       console.error('Failed to add image:', error);
       res.status(500).json({ message: 'Failed to add image.' });
+    }
+  }
+);
+
+// Новий маршрут для додавання URL-адреси зображення
+router.patch(
+  '/superheros/:id/imagesUrl',
+  async (req, res) => {
+    console.log('Received PATCH request for hero ID:', req.params.id);
+    console.log('Image URL:', req.body.imageUrl);
+
+    try {
+      const hero = await superherosCollection.findById(req.params.id);
+      if (!hero) {
+        return res.status(404).json({ message: 'Hero not found.' });
+      }
+
+      // Перевіряємо, чи надано URL-адресу зображення
+      const { imageUrl } = req.body;
+      if (imageUrl) {
+        hero.images.push(imageUrl); // Додаємо URL до масиву зображень
+        await hero.save(); // Зберігаємо оновлення в базі даних
+        return res.json(hero);
+      } else {
+        return res.status(400).json({ message: 'No image URL provided.' });
+      }
+    } catch (error) {
+      console.error('Failed to add image URL:', error);
+      res.status(500).json({ message: 'Failed to add image URL.' });
     }
   }
 );
