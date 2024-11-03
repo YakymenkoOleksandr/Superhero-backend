@@ -25,7 +25,7 @@
     }
   ],
   "paths": {
-    "/students": {
+    "/superhero": {
       "get": {
         "tags": [
           "Superhero"
@@ -235,7 +235,7 @@
         }
       }
     },
-    "/students/{id}": {
+    "/superhero/{id}": {
       "get": {
         "tags": [
           "Superhero"

@@ -14,12 +14,12 @@ tags:
 servers:
   - url: https://superhero-backend-vrcc.onrender.com
 paths:
-  /students:
+  /superhero:
     get:
       $ref: '../swagger/paths/superhero/get.yaml'
     post:
       $ref: '../swagger/paths/superhero/post.yaml'
-  /students/{id}:
+  /superhero/{id}:
     get:
       $ref: '../swagger/paths/superhero/{id}/get.yaml'
 components:
