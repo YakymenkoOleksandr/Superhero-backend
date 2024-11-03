@@ -1,0 +1,76 @@
+tags:
+  - Superhero
+summary: Create superhero
+operationId: createSuperhero
+description: 'Create a superhero with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - nickname
+          - real_name
+          - origin_description
+          - superpowers
+          - catch_phrase
+          - images
+        properties:
+          nickname:
+            description: "Superhero's nickname"
+            type: string
+            example: 'Wolverine'
+          real_name:
+            description: "Superhero's real_name"
+            type: string
+            example: Logan
+          origin_description:
+            description: "Superhero's origin_description"
+            type: string
+            example: 'A mutant with an accelerated healing factor and retractable claws coated with indestructible adamantium.'
+          superpowers:
+            description: "Superhero's superpowers"
+            type: array
+            example:
+              [
+                'Regeneration',
+                'Enhanced senses',
+                'Retractable claws',
+                'Immortality',
+              ]
+          catch_phrase:
+            description: "Superhero's catch_phrase"
+            type: string
+            example: I'm the best there is at what I do.
+          images:
+            description: "Student's images"
+            type: array
+            example:
+              [
+                'https://i.pinimg.com/736x/b0/53/4c/b0534c891f2720e31b735ce171993ff3.jpg',
+              ]
+responses:
+  '201':
+    description: Creates a superhero
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a superhero!
+            data:
+              type: object
+              $ref: '../../components/schemas/superhero.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
