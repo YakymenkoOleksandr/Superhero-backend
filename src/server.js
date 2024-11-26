@@ -1,13 +1,15 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-import superherosRouter from './routers/superheros.js';
+// import superherosRouter from './routers/superheros.js';
 import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { UPLOAD_DIR } from './constants/index.js';
 import superherosImagesRoutes from '../src/routers/superherosImages.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import router from './routers/index.js';
+import cookieParser from 'cookie-parser';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -16,6 +18,7 @@ export const startServer = () => {
 
   app.use(express.json());
   app.use(cors());
+  app.use(cookieParser());
 
   app.use(
     pino({
@@ -30,7 +33,7 @@ export const startServer = () => {
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
 
-  app.use(superherosRouter);
+  app.use(router);
 
   app.use('*', notFoundHandler);
 

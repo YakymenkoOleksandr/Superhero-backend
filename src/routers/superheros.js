@@ -1,8 +1,7 @@
 import { Router } from 'express';
-
 import { validateBody } from '../middlewares/validateBody.js';
 import { createSuperheroSchema } from '../validation/superheros.js';
-
+import { authenticate } from '../middlewares/authenticate.js';
 import {
   getSuperherosController,
   getSuperheroByIdController,
@@ -15,6 +14,10 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { upload } from '../middlewares/multer.js';
 
 const router = Router();
+
+router.use(authenticate);
+
+router.get('/', ctrlWrapper(getSuperherosController));
 
 router.get('/superheros', ctrlWrapper(getSuperherosController));
 

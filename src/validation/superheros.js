@@ -12,4 +12,5 @@ export const createSuperheroSchema = Joi.object({
   superpowers: Joi.array().items(Joi.string().min(3).max(100)).required(),
   catch_phrase: Joi.string().min(3).max(50).required(),
   images: Joi.array().items(Joi.string().uri()).required(),
+  parentId: Joi.string().required(),
 });
