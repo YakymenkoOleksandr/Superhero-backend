@@ -12,10 +12,3 @@ export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
 
 export const FIFTEEN_MINUTES = 15 * 60 * 1000;
 export const ONE_DAY = 24 * 60 * 60 * 1000;
-
-export const ROLES = {
-  ADMIN: 'admin',
-  USER: 'user',
-  GUEST: "guest",
-};
-

@@ -5,13 +5,21 @@ import { logoutUser } from '../services/auth.js';
 import { refreshUsersSession } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
-
-  res.status(201).json({
-    status: 201,
-    message: 'Successfully registered a user!',
-    data: user,
-  });
+  try {
+    console.log('Received data:', req.body); // Логування даних, що надходять
+    const newUser = await registerUser(req.body);
+    res.status(201).json(newUser);
+  } catch (err) {
+    console.error('Registration error:', err.message); // Логування помилки
+    if (err.code === 11000) {
+      // Помилка дублювання email
+      res.status(400).json({ message: 'Email already exists' });
+    } else {
+      res
+        .status(400)
+        .json({ message: 'BadRequestError', details: err.message });
+    }
+  }
 };
 
 export const loginUserController = async (req, res) => {
@@ -34,7 +42,6 @@ export const loginUserController = async (req, res) => {
     },
   });
 };
-
 
 export const logoutUserController = async (req, res) => {
   if (req.cookies.sessionId) {
@@ -74,5 +81,3 @@ export const refreshUserSessionController = async (req, res) => {
     },
   });
 };
-
-
