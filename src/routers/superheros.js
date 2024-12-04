@@ -12,6 +12,7 @@ import {
 } from '../controllers/superheros.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { upload } from '../middlewares/multer.js';
+import verifyToken from '../middleware/verifyToken.js';
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.use(authenticate);
 
 router.get('/', ctrlWrapper(getSuperherosController));
 
-router.get('/superheros', ctrlWrapper(getSuperherosController));
+router.get('/superheros', verifyToken, ctrlWrapper(getSuperherosController));
 
 router.get(
   '/superheros/:superheroId',
