@@ -28,7 +28,7 @@ router.get(
 );
 
 router.post(
-  '/superheroes',
+  '/superheros',
   verifyToken,
   validateBody(createSuperheroSchema),
   upload.single('images'),
