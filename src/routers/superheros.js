@@ -12,7 +12,7 @@ import {
 } from '../controllers/superheros.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { upload } from '../middlewares/multer.js';
-import verifyToken from '../middleware/verifyToken.js';
+import verifyToken from '../middlewares/verifyToken.js';
 
 const router = Router();
 
