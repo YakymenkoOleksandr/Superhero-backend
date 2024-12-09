@@ -7,13 +7,13 @@ import { requestResetToken } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
   try {
-    console.log('Received data:', req.body); // Логування даних, що надходять
+    console.log('Received data:', req.body);
     const newUser = await registerUser(req.body);
     res.status(201).json(newUser);
   } catch (err) {
-    console.error('Registration error:', err.message); // Логування помилки
+    console.error('Registration error:', err.message);
     if (err.code === 11000) {
-      // Помилка дублювання email
+
       res.status(400).json({ message: 'Email already exists' });
     } else {
       res
