@@ -26,7 +26,6 @@ export const checkRoles =
 
       const superhero = await superherosCollection.findOne({
         _id: superheroId,
-        parentId: user._id,
       });
 
       if (superhero) {

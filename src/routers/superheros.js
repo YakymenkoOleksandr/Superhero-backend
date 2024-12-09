@@ -16,8 +16,6 @@ import verifyToken from '../middlewares/verifyToken.js';
 
 const router = Router();
 
-router.use(authenticate);
-
 router.get('/', ctrlWrapper(getSuperherosController));
 
 router.get('/superheros', verifyToken, ctrlWrapper(getSuperherosController));
