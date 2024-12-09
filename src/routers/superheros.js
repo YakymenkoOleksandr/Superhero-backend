@@ -18,7 +18,7 @@ const router = Router();
 
 router.get('/', ctrlWrapper(getSuperherosController));
 
-router.get('/superheros', verifyToken, ctrlWrapper(getSuperherosController));
+router.get('/superheros', ctrlWrapper(getSuperherosController));
 
 router.get(
   '/superheros/:superheroId',
