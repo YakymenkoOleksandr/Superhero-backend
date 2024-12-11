@@ -1,7 +1,7 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-// import superherosRouter from './routers/superheros.js';
+
 import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
@@ -18,18 +18,22 @@ export const startServer = () => {
 
   app.use(express.json());
 
- app.use(cors({
-  origin: (origin, callback) => {
-    const allowedOrigins = ['http://localhost:5173', 'https://superhero-frontend-nine.vercel.app'];
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, // Дозволити облікові дані (cookies)
-}));
-
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        const allowedOrigins = [
+          'http://localhost:5173',
+          'https://superhero-frontend-nine.vercel.app',
+        ];
+        if (allowedOrigins.includes(origin) || !origin) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+    }),
+  );
 
   app.use(cookieParser());
 

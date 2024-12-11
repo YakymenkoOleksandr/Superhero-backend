@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createSuperheroSchema } from '../validation/superheros.js';
-import { authenticate } from '../middlewares/authenticate.js';
 import {
   getSuperherosController,
   getSuperheroByIdController,
@@ -12,7 +11,6 @@ import {
 } from '../controllers/superheros.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { upload } from '../middlewares/multer.js';
-import verifyToken from '../middlewares/verifyToken.js';
 
 const router = Router();
 
@@ -20,10 +18,7 @@ router.get('/', ctrlWrapper(getSuperherosController));
 
 router.get('/superheros', ctrlWrapper(getSuperherosController));
 
-router.get(
-  '/superheros/:superheroId',
-  ctrlWrapper(getSuperheroByIdController),
-);
+router.get('/superheros/:superheroId', ctrlWrapper(getSuperheroByIdController));
 
 router.post(
   '/superheros',

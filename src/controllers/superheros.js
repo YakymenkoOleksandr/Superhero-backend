@@ -29,12 +29,10 @@ export const getSuperheroByIdController = async (req, res, next) => {
   const { superheroId } = req.params;
   const superhero = await getSuperheroById(superheroId);
 
-  // Відповідь, якщо контакт не знайдено
   if (!superhero) {
     throw createHttpError(404, 'Superhero not found');
   }
 
-  // Відповідь, якщо контакт знайдено
   res.json({
     status: 200,
     message: `Successfully found superhero with id ${superheroId}!`,

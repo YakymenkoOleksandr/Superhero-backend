@@ -1,19 +1,23 @@
 import { superherosCollection } from '../db/models/superhero.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-
 export const getAllSuperheros = async ({ page, perPage }) => {
-   const limit = perPage;
+  const limit = perPage;
   const skip = (page - 1) * perPage;
 
   const superherosQuery = superherosCollection.find();
-  const superherosCount = await superherosCollection.find()
+  const superherosCount = await superherosCollection
+    .find()
     .merge(superherosQuery)
     .countDocuments();
 
   const superhero = await superherosQuery.skip(skip).limit(limit).exec();
 
-  const paginationData = calculatePaginationData(superherosCount, perPage, page);
+  const paginationData = calculatePaginationData(
+    superherosCount,
+    perPage,
+    page,
+  );
 
   return {
     data: superhero,

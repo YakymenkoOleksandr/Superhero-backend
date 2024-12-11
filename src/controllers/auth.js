@@ -13,7 +13,6 @@ export const registerUserController = async (req, res) => {
   } catch (err) {
     console.error('Registration error:', err.message);
     if (err.code === 11000) {
-
       res.status(400).json({ message: 'Email already exists' });
     } else {
       res
