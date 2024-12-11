@@ -15,19 +15,22 @@ const PORT = Number(env('PORT', '3000'));
 
 export const startServer = () => {
   const app = express();
-  const allowedOrigins = ['https://superhero-frontend-nine.vercel.app'];
 
   app.use(express.json());
-  app.use(cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true, // Дозволяє передачу cookies
-  }));
+
+ app.use(cors({
+  origin: (origin, callback) => {
+    const allowedOrigins = ['http://localhost:5173', 'https://superhero-frontend-nine.vercel.app'];
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Дозволити облікові дані (cookies)
+}));
+
+
   app.use(cookieParser());
 
   app.use(
