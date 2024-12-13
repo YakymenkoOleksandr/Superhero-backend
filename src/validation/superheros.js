@@ -9,7 +9,7 @@ export const createSuperheroSchema = Joi.object({
   }),
   real_name: Joi.string().min(3).max(30).required(),
   origin_description: Joi.string().min(3).max(1000).required(),
-  superpowers: Joi.array().items(Joi.string().min(3).max(100)).required(),
+  superpowers: Joi.string().min(3).max(100).required(),
   catch_phrase: Joi.string().min(3).max(50).required(),
   images: Joi.array().items(Joi.string().uri()).required(),
 });

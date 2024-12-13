@@ -15,7 +15,7 @@ const superheroSchema = new Schema(
       required: true,
     },
     superpowers: {
-      type: [String],
+      type: String,
       required: true,
     },
     catch_phrase: {
